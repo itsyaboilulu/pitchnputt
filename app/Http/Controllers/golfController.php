@@ -196,6 +196,7 @@ class golfController extends Controller
                             $ret[$n] = count($ret) - $i;
                             $used[] = $n;
                         } else {
+                            $i--;
                             $used[] = $n;
                             for ($j = 1; $j < count($ret); $j++) {
                                 if ($ret[$n] != $ret[array_keys($ret)[array_search($n, $ret) + $j]] && !in_array(array_keys($ret)[array_search($n, $ret) + $j], $ret)) {
@@ -221,7 +222,7 @@ class golfController extends Controller
                     };
                 }
             }
-            arsort($ret);
+            asort($ret);
         }
 
         return $ret;
