@@ -1,0 +1,12 @@
+general:
+    comment correctly
+
+new:
+    temp user creation
+    edit corse
+    edit old scores
+    create new group
+
+update:
+    golf::positions() - account for ties when using points system
+    change email login to username && score names to usernames

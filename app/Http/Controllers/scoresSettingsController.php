@@ -13,9 +13,18 @@ use App\groupMembers;
 use App\groupSettings;
 use Illuminate\Support\Facades\DB;
 
-class scoresController extends Controller
+/**
+ * functions and view related to scores settings page
+ */
+class scoresSettingsController extends Controller
 {
 
+    /**
+     * display scores settings page
+     *
+     * @param Request $request
+     * @return view(scores)
+     */
     public function pageScores(Request $request)
     {
         foreach (groupSettings::where('groupid', group::currentGroupId())->get() as $setting) {
@@ -29,6 +38,12 @@ class scoresController extends Controller
     }
 
 
+    /**
+     * set posted scores into data, creates a new week and corse if neccessery
+     *
+     * @param Request $request
+     * @return redirect(root)
+     */
     public function setScores(Request $request)
     {
         $gid = group::currentGroupId();

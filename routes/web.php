@@ -17,13 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-//Route::get('/', function () { return redirect('login'); });
-
 Route::get('',              'HomeController@home')->name('home');
 Route::get('/player',       'HomeController@pageBio');
 Route::get('/week',         'HomeController@pageWeek');
-Route::get('/scores',       'scoresController@pageScores');
-Route::post('/setscores',       'scoresController@setScores');
+Route::get('/scores',       'scoresSettingsController@pageScores');
+Route::post('/setscores',   'scoresSettingsController@setScores');
 Route::get('/setgroup',     'HomeController@pageSetGroup');
 
 

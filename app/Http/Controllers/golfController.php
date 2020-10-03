@@ -12,29 +12,52 @@ use App\users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
+/**
+ * class for all golf/scores related funcions
+ */
 class golfController extends Controller
 {
-
+    /**
+     * internal strorage of scores,
+     * faster/more efficent then multiple db selects
+     *
+     * @var array( name => [ week => [ score ] ] )
+     */
     protected $scores_data = NULL;
+
+
+    /**
+     * loaded group id
+     *
+     * @var integer
+     */
     protected $group = 0;
 
+
     /**
-     * Undocumented function
+     * set group id into local storage, defaults to id in session
      *
-     * @param integer $group
+     * @param integer $groupid
      */
-    public function __construct($group = 0)
+    public function __construct($groupid = 0)
     {
-        $this->group = ($group) ? $group : group::currentGroupId();
+        $this->group = ($groupid) ? $groupid : group::currentGroupId();
     }
 
-    /** -------------- Public Functions ---------------- **/
+
+    /** --------------------- Public Functions --------------------------- **/
+
 
     /**
-     * returns all the information used in the total page (/)
+     * returns all the information used in the total page (root index)
      *
-     * @return array
+     * @return array(
+     *      scores      => golf::scores(),
+     *      position    => golf::positions(),
+     *      consistant  => golf::consistancy(),
+     *      range       => golf::range(),
+     *      parAccuracy => golf::parAccuracy()
+     *  )
      */
     public function GetTotal()
     {
@@ -49,10 +72,15 @@ class golfController extends Controller
 
 
     /**
-     * returns all the information used in the total page (/week)
+     * returns all the information used in the week page (/week)
      *
      * @param int $week
-     * @return void
+     * @return array(
+     *      scores      => golf::score(),
+     *      consistant  => golf::consistancy(),
+     *      parAccuracy => golf::parAccuracy(),
+     *      range       => golf::range(),
+     *  )
      */
     public function GetWeek($week)
     {
@@ -64,11 +92,12 @@ class golfController extends Controller
         );
     }
 
+
     /**
      * collects and returns all users scores data, stores in memory to
      * reduce strain on sql server
      *
-     * @return $this->scores_data
+     * @var array( name => [ week => [ score ] ] )
      */
     public function scores()
     {
@@ -90,13 +119,13 @@ class golfController extends Controller
 
 
     /**
-     * filters and returns of $this->scores_data
+     * filters and returns $this->scores_data
      *
      * @param integer $uid player id
      * @param integer $weekid week number
      * @param integer $holeid hole number
      *
-     * @return array
+     * @return array( name => filtered data] )
      */
     public function score($uid = 0, $weekid = 0, $holeid = 0)
     {
@@ -129,11 +158,13 @@ class golfController extends Controller
 
 
     /**
-     * returns players position in current tourniment, ordered by postion 1->5 and
+     * returns players position in current tourniment/group, ordered by postion 1->5 and
      * gives players score
      *
+     * @todo account for ties when using points system
+     *
      * @param int $week week number
-     * @return array { name => score }
+     * @return array( name => score )
      */
     public function positions($week = 0)
     {
@@ -150,7 +181,7 @@ class golfController extends Controller
         }
         asort($ret);
         if ((groupSettings::where('groupid', $this->group)->where('name', 'points_system')->first())->value) {
-            //use a per game pints system aposed to lowest points
+            //use a per game pionts system aposed to lowest points
             if ($week) {
                 $i = 0;
                 foreach ($ret as $n => $p) {
@@ -182,7 +213,7 @@ class golfController extends Controller
      *
      * @param integer $week week number
      * @param integer $hole hole number
-     * @return array
+     * @return array( name => [ { week=> { week id => data } }, { hole => data } )
      */
     public function scoreCount($week = 0, $hole = 0)
     {
@@ -301,7 +332,10 @@ class golfController extends Controller
     /**
      * gets each player (and groups) favourite range, based on lowest score to disance
      *
-     * @return void
+     * @return array( name =>
+     *      { week  => { week number => { range => score } } },
+     *      { total => { range => total score } },
+     *      { avg   => { range => avg score } } )
      */
     public function range($week = 0)
     {
@@ -344,7 +378,7 @@ class golfController extends Controller
      *      options are either $hole, $week or neither
      *
      * @param integer $week week number
-     * @return array()
+     * @return array( name => data )
      */
     public function consistancy($week = 0)
     {

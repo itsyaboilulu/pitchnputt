@@ -11,30 +11,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * class for all home/view related funcions
+ */
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * load middleware
      */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+
     /**
-     * Show the application dashboard.
+     * Show home page depicting the groups total scores.
      *
+     * @param Request $request
+     * @return view(home)
      */
     public function home()
     {
-
         $golf = new golfController();
-
         return view('home', $golf->getTotal() + $this->headerData());
     }
 
+
+    /**
+     * display bio page for given $player
+     *
+     * @param Request $request
+     * @return view(bio)
+     */
     public function pageBio(Request $request)
     {
         $id = group::isMember($request->get('player'));
@@ -48,6 +57,13 @@ class HomeController extends Controller
         return redirect('/');
     }
 
+
+    /**
+     * display week page for given $week
+     *
+     * @param Request $request
+     * @return view(week)
+     */
     public function pageWeek(Request $request)
     {
         $week = $request->get('week');
@@ -59,7 +75,12 @@ class HomeController extends Controller
     }
 
 
-
+    /**
+     * allows user to change viewed group to given $id
+     *
+     * @param Request $request
+     * @return redirect(root)
+     */
     public function pageChangeGroup(Request $request)
     {
         if (group::isMember(Auth::id(), $request->get('id'))) {
@@ -72,7 +93,12 @@ class HomeController extends Controller
     /**
      * retruns an array of data needed for the page header/menu to function correctly
      *
-     * @return array
+     * @return array(
+     *      weeks   => golfWeek,
+     *      players => DB::SELECT(players),
+     *      isAdmin => group::isAdmin(),
+     *      group   => group::currentGroup(),
+     *      groups  => group::getUserGroups() )
      */
     public function headerData()
     {
