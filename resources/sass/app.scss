@@ -1,0 +1,57 @@
+.score-table tbody tr td,
+.score-table thead tr th {
+    text-align: center;
+}
+.podium {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+.podium-item {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 1rem;
+    background-clip: border-box;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    text-transform: capitalize;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+.podium-item-1 {
+    background-color: lighten(adjust-hue(#ffc107, 10), 10%);
+    margin-bottom: 1.5rem;
+}
+.podium-item-2 {
+    background-color: lighten(adjust-hue(#d1d7da, 10), 10%);
+    margin-bottom: 0.5rem;
+}
+.podium-item-3 {
+    background-color: lighten(adjust-hue(#df7e08, 10), 10%);
+    margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .podium-item {
+        display: none;
+    }
+    .podium-item-1,
+    .podium-item-2,
+    .podium-item-3 {
+        display: initial;
+    }
+}
+.active-view {
+    background-color: rgba(171, 217, 91, 0.8) !important;
+    padding: 1px 4px;
+    border-radius: 5px;
+}
+
+.overflow-label:hover:not(.active-view) {
+    cursor: pointer;
+    background-color: rgba(171, 217, 91, 0.4) !important;
+    padding: 1px 4px;
+    border-radius: 5px;
+}
