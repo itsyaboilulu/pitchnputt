@@ -183,10 +183,34 @@ class golfController extends Controller
         if ((groupSettings::where('groupid', $this->group)->where('name', 'points_system')->first())->value) {
             //use a per game pionts system aposed to lowest points
             if ($week) {
-                $i = 0;
+                $used = [];
+                $usedused = [];
+                $i = count($ret);
                 foreach ($ret as $n => $p) {
-                    $ret[$n] = count($ret) - $i;
-                    $i++;
+                    //this is really icky
+                    if (in_array($n, $used)) {
+                        $ret[$n] = count($ret) - $i;
+                    } else {
+                        if ($ret[$n] != $ret[array_keys($ret)[array_search($n, $ret) + 1]]) {
+                            $i--;
+                            $ret[$n] = count($ret) - $i;
+                            $used[] = $n;
+                        } else {
+                            $used[] = $n;
+                            for ($j = 1; $j < count($ret); $j++) {
+                                if ($ret[$n] != $ret[array_keys($ret)[array_search($n, $ret) + $j]] && !in_array(array_keys($ret)[array_search($n, $ret) + $j], $ret)) {
+                                    $i--;
+                                    $used[] = array_keys($ret)[array_search($n, $ret) + $j];
+                                }
+                            }
+                            foreach ($used as $u) {
+                                if (!in_array($u, $usedused)) {
+                                    $ret[$n] = count($ret) - $i;
+                                    $usedused[] = $n;
+                                }
+                            }
+                        }
+                    }
                 }
             } else {
                 //recure becouse its esayer then retyping the 1st half
