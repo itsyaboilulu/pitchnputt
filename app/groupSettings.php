@@ -5,8 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * model for quiz:group_settings
+ * model for golf:group_settings
  *
+ * @param int groupid PK
+ * @param string name
+ * @param mixed value
  */
 class groupSettings extends Model
 {
@@ -15,6 +18,12 @@ class groupSettings extends Model
     protected $table = 'group_settings';
 
 
+    /**
+     * gets the setting for a given group
+     *
+     * @param integer $gid group id
+     * @return array( setting => value)
+     */
     public static function getGroupSettings($gid = 0)
     {
         if (!$gid) {

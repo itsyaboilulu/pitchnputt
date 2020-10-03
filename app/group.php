@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
- * model for quiz:group
- *
+ * model for golf:group
+ * @param int $id PK
+ * @param string $name
  */
 class group extends Model
 {
@@ -17,7 +18,7 @@ class group extends Model
 
 
     /**
-     *  returns loggin in users current group id
+     *  returns id of sessioned group
      *
      *  @todo swap out for currentGroup()
      *
@@ -28,20 +29,20 @@ class group extends Model
         return group::currentGroup()->id;
     }
 
+
     /**
-     *  returns loggin in users current group id
+     *  returns session('group'), if not set, sets it
      *
-     * @return object
+     * @return session(group)
      */
     public static function currentGroup()
     {
-
         if (!session()->has('group')) {
             session(['group' => group::find((groupMembers::where('userid', Auth::id())->first())->groupid)]);
         }
-
         return session('group');
     }
+
 
     /**
      * returns true/false if player is member of current group
@@ -62,6 +63,11 @@ class group extends Model
         return (count($db)) ? $db[0]->id : 0;
     }
 
+    /**
+     * returns true/false if logged in user is an admin of sessioned group
+     *
+     * @return boolean
+     */
     public static function isAdmin()
     {
         $db = DB::select("SELECT gm.admin FROM group_members gm INNER JOIN users u2 ON u2.id = gm.userid WHERE gm.groupid = " . group::currentGroupId() . " AND u2.name = '" . Auth::user()->name . "';");
@@ -69,6 +75,11 @@ class group extends Model
     }
 
 
+    /**
+     * returns all group members of sessioned group
+     *
+     * @return object
+     */
     public static function getUserGroups()
     {
         return DB::select('SELECT g.* FROM `group` g INNER JOIN group_members gm ON gm.groupid = g.id WHERE gm.userid = ' . Auth::id());
