@@ -326,7 +326,7 @@ function updateConsistancy($hole) {
     Object.entries(consistancy_data).forEach(entry => {
         const [key, value] = entry;
         c_data = $hole == "h" ? value["total"] : value["hole"][$hole];
-        clabels.push(key);
+        clabels.push(key + " (" + c_data[0] + ")");
         cd.push(c_data[1]);
     });
     if (open_chart) {
