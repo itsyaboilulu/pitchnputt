@@ -183,36 +183,32 @@ class golfController extends Controller
         if ((groupSettings::where('groupid', $this->group)->where('name', 'points_system')->first())->value) {
             //use a per game pionts system aposed to lowest points
             if ($week) {
+                asort($ret);
+                $oret = $ret;
+                foreach ($ret as $sn => $sv) {
+                    //esayer then chaining array_keys and array_search
+                    $sret[] = [$sn, $sv];
+                }
                 $used = [];
-                $usedused = [];
-                $i = count($ret);
-                foreach ($ret as $n => $p) {
-                    //this is really icky
-                    if (in_array($n, $used)) {
-                        $ret[$n] = count($ret) - $i;
-                    } else {
-                        if ($ret[$n] != $ret[array_keys($ret)[array_search($n, $ret) + 1]]) {
-                            $i--;
-                            $ret[$n] = count($ret) - $i;
-                            $used[] = $n;
+                $return = [];
+                for ($i = 0; $i < count($sret); $i++) {
+                    if (!in_array($sret[$i][0], $used)) {
+                        if (isset($sret[$i + 1]) && $sret[$i][1] == $sret[$i + 1][1]) {
+                            for ($j = $i; $j < count($ret); $j++) {
+                                if (isset($sret[$j + 1]) && $sret[$j][1] == $sret[$j + 1][1] && $sret[$j][1] == $sret[$i][1]) {
+                                    $return[$sret[$j][0]] = $i + 1;
+                                    $return[$sret[$j + 1][0]] = $i + 1;
+                                    $used[] = $sret[$j][0];
+                                    $used[] = $sret[$j + 1][0];
+                                }
+                            }
                         } else {
-                            $i--;
-                            $used[] = $n;
-                            for ($j = 1; $j < count($ret); $j++) {
-                                if ($ret[$n] != $ret[array_keys($ret)[array_search($n, $ret) + $j]] && !in_array(array_keys($ret)[array_search($n, $ret) + $j], $ret)) {
-                                    $i--;
-                                    $used[] = array_keys($ret)[array_search($n, $ret) + $j];
-                                }
-                            }
-                            foreach ($used as $u) {
-                                if (!in_array($u, $usedused)) {
-                                    $ret[$n] = count($ret) - $i;
-                                    $usedused[] = $n;
-                                }
-                            }
+                            $return[$sret[$i][0]] = $i + 1;
+                            $used[] = $sret[$i][0];
                         }
                     }
                 }
+                $ret = $return;
             } else {
                 //recure becouse its esayer then retyping the 1st half
                 $ret = array();

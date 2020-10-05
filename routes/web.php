@@ -1,6 +1,7 @@
 <?php
 
 use App\group;
+use App\Http\Controllers\golfController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,13 @@ Route::get('/setgroup',     'HomeController@pageSetGroup');
 if (env('APP_DEBUG')) {
     Route::get('/dev/modelmaker', 'devToolBoxController@modelMaker');
     Route::get('/test', function () {
-        print_r(group::currentGroupId());
+        $golf = new golfController(1);
+        $pos = $golf->positions(2);
+        print_r($pos[0]);
+        echo '<hr>';
+        print_r($pos[1]);
+        echo '<hr>';
+        print_r($pos[2]);
+        echo '<hr>';
     });
 }
