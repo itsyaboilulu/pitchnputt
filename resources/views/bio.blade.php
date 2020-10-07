@@ -52,7 +52,7 @@
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-bar mr-1"></i>
+                <i class="fas fa-chart-pie mr-1"></i>
                 Hole Count
             </div>
             <div class="card-body" style="height: 100%"><canvas id="HoleCountPieChart" width="100%" height="88" ></canvas></div>
@@ -61,7 +61,7 @@
     <div class="col-xl-3 col-md-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-bar mr-1"></i>
+                <i class="fas fa-chart-pie mr-1"></i>
                 Par %
             </div>
             <div class="card-body" style="height: 100%"><canvas id="parPercentPieChart" width="100%" height="88" ></canvas></div>
@@ -84,7 +84,7 @@
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table mr-1"></i>
+                <i class="fas fa-chart-area mr-1"></i>
                 Range(Yards)
             </div>
             <div class="card-body">

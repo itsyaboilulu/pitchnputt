@@ -35,6 +35,7 @@
                                 <a class="dropdown-item" href="changegroup?id={{ $gs->id }}">{{ $gs->name }}</a>
                             @endif
                         @endforeach
+                        <a class="dropdown-item" href="#">New/Join Group</a>
                         <a class="dropdown-item" onclick="document.getElementById('logout-form').submit()" >Logout</a>
                     </div>
                 </li>
@@ -75,7 +76,7 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-plus-square"></i></div>
                                     Add Scores
                                 </a>
-                                <!--<a class="nav-link" href="/golf"> <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>Settings</a> -->
+                                <a class="nav-link" href="groupsettings"> <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>Settings</a>
                             @endif
                         </div>
 

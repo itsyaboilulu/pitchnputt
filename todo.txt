@@ -1,12 +1,20 @@
 general:
     comment correctly
 
-new:
+todo:
     temp user creation
-    edit corse
-    edit old scores
-    create new group
+        temp user creation
+        temp user destruction
+    register:
+        new user
+            create new group
+        create invite link
+        remove member
+    get weeks wheather:
+        use on total page for score comparison
+        use on player page for score comparison
+    csv score input
 
-update:
-    golf::positions() - account for ties when using points system
-    change email login to username && score names to usernames
+
+
+

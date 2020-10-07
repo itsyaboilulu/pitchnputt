@@ -108,6 +108,7 @@ class HomeController extends Controller
             'isAdmin'   => group::isAdmin(),
             'group'     => group::currentGroup(),
             'groups'    => group::getUserGroups(),
+            'settings'  => groupSettings::getGroupSettings(),
         );
     }
 }

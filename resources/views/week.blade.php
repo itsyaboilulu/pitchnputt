@@ -38,7 +38,7 @@
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-area mr-1"></i>
+                <i class="fas fa-chart-line mr-1"></i>
                 Score
             </div>
             <div class="card-body">
@@ -60,7 +60,7 @@
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-area mr-1"></i>
+                <i class="fas fa-chart-bar mr-1"></i>
                 Consistsancy
             </div>
             <div class="card-body">
@@ -71,7 +71,7 @@
     <div class="col-xl-6">
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-bar mr-1"></i>
+                <i class="fas fa-chart-line mr-1"></i>
                 Range (score/yards)
             </div>
             <div class="card-body" style="height: 100%"><canvas id="rangeGraph" width="100%" height="40" ></canvas></div>

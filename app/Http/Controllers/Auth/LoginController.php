@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller {
+class LoginController extends Controller
+{
 
     use AuthenticatesUsers;
 
@@ -17,28 +18,31 @@ class LoginController extends Controller {
      *
      * @return void
      */
-    public function __construct(){$this->middleware('guest')->except('logout');}
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
 
-    public function pageLogin(){
+    public function pageLogin()
+    {
         return view('auth/login');
     }
-  
+
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function login(Request $request) {   
+    public function login(Request $request)
+    {
         $input = $request->all();
-        $this->validate($request, ['email' => 'required','password' => 'required',]);
-        
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+        $this->validate($request, ['email' => 'required', 'password' => 'required',]);
+
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             return redirect()->route('home');
-        }else{
-            return redirect()->route('login')->with('error','Email-Address And Password Are Wrong.');
+        } else {
+            return redirect()->route('login')->with('error', 'Email-Address And Password Are Wrong.');
         }
-
     }
-
 }

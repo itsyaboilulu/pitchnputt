@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Page Title - SB Admin</title>
-        <link href="resources/css/bootstrap.css" rel="stylesheet" />
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -24,14 +24,18 @@
                                             @csrf
 
                                             <div class="form-group row">
-                                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
 
                                                 <div class="col-md-6">
                                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
+                                                            <strong>
+                                                                @if($message == 'validation.unique')
+                                                                    Username already taken
+                                                                @endif
+                                                            </strong>
                                                         </span>
                                                     @enderror
                                                 </div>
@@ -45,7 +49,9 @@
 
                                                     @error('email')
                                                         <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
+                                                            <strong>
+                                                                Email already in use
+                                                            </strong>
                                                         </span>
                                                     @enderror
                                                 </div>
@@ -59,7 +65,13 @@
 
                                                     @error('password')
                                                         <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
+                                                            <strong>
+                                                                @if($message == 'validation.min.string')
+                                                                    Password must be more then 8 characters
+                                                                @else
+                                                                    Passwords did not match
+                                                                @endif
+                                                            </strong>
                                                         </span>
                                                     @enderror
                                                 </div>
@@ -83,7 +95,7 @@
                                        </form>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="small"><a href="login.html">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="login">Have an account? Go to login</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -92,22 +104,11 @@
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2020</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="resources/js/bootstrap.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
     </body>
 </html>
