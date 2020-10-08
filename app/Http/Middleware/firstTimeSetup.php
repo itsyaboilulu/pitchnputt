@@ -20,7 +20,7 @@ class firstTimeSetup
     public function handle($request, Closure $next)
     {
 
-        if (count(group::find(groupMembers::where('userid', Auth::id())->get())) == 0) {
+        if (!group::find(groupMembers::where('userid', Auth::id())->get())) {
             return redirect('/newgroup');
         }
         return $next($request);

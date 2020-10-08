@@ -100,7 +100,7 @@ class tempUserController extends Controller
         }
         //login as temp user and display home page
         Auth::loginUsingId($newid, true);
-        return redirect('/');
+        return redirect('/changegroup?id=' . $gid);
     }
 
 

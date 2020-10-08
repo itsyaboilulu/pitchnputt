@@ -26,7 +26,7 @@ Route::get('',                  'HomeController@home')->name('home');
 Route::get('/player',           'HomeController@pageBio')->name('player');
 Route::get('/week',             'HomeController@pageWeek')->name('week');
 Route::get('/scores',           'scoresSettingsController@pageScores')->name('scores');
-Route::get('/changegroup',      'HomeController@pageChangeGroup')->name('changeGroup');
+Route::get('/changegroup',      'newGroupController@pageChangeGroup')->name('changeGroup');
 Route::get('/groupsettings',    'groupSettingsController@pageSettings')->name('groupsettings');
 Route::get('/newgroup',         'newGroupController@pageNewGroup')->name('newGroup');
 Route::get('/lobby',            'lobbyController@pageLobby');

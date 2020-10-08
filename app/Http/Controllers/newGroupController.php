@@ -106,4 +106,20 @@ class newGroupController extends Controller
         }
         return redirect('changegroup?id=' . $gid);
     }
+
+
+
+    /**
+     * allows user to change viewed group to given $id
+     *
+     * @param Request $request
+     * @return redirect(root)
+     */
+    public function pageChangeGroup(Request $request)
+    {
+        if (group::isMember(Auth::id(), $request->get('id'))) {
+            session(['group' => group::find($request->get('id'))]);
+        }
+        return redirect('/');
+    }
 }
