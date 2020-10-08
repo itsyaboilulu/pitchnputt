@@ -34,6 +34,8 @@
                                                             <strong>
                                                                 @if($message == 'validation.unique')
                                                                     Username already taken
+                                                                @else
+                                                                    Username cannot contain a space
                                                                 @endif
                                                             </strong>
                                                         </span>
