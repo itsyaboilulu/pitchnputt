@@ -28,14 +28,6 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Groups</h3></div>
                                     <div class="card-body">
-                                        <p>Ask the group admin to generate a Join code in settings</p>
-                                        <form>
-                                            <div class="form-group d-flex align-items-center mt-2 mb-2">
-												<input class="join-input"  type="text" placeholder="Join Code" name='code' />
-												<button class="btn btn-primary" type="submit">Join</button>
-											</div>
-                                        </form>
-                                        <hr>
                                         Create a new group
                                         <form action="newgroup/create" method="POST">
                                             @csrf

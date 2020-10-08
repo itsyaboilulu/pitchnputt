@@ -2,7 +2,6 @@ general:
     comment correctly
 
 todo:
-    register:
     get weeks wheather:
         use on total page for score comparison
         use on player page for score comparison
