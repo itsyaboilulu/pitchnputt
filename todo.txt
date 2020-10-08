@@ -2,14 +2,7 @@ general:
     comment correctly
 
 todo:
-    temp user creation
-        temp user creation
-        temp user destruction
     register:
-        new user
-            create new group
-        create invite link
-        remove member
     get weeks wheather:
         use on total page for score comparison
         use on player page for score comparison

@@ -25,6 +25,7 @@ class scoresSettingsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('firstTimeSetup');
     }
 
 
@@ -65,7 +66,7 @@ class scoresSettingsController extends Controller
         $gid = group::currentGroupId();
         $weekcount = count(golfWeek::where('groupid', $gid)->get()) + 1;
         $settings = groupSettings::getGroupSettings();
-        if ($request->get('corse') == 'new') {
+        if ($request->get('corse') == '' || $request->get('corse') == 'new') {
             $golfcorse = new golfCorse();
             $golfcorse->name = 'week ' . $weekcount;
             $golfcorse->groupid = $gid;

@@ -42,7 +42,7 @@ class tempUserController extends Controller
         $tu->save();
         //create Group
         $group = new group();
-        $group->name = '"tempGroup-' . time() . '"';
+        $group->name = 'tempGroup-' . time();
         $group->save();
         $gid = $group->id;
         //add cource
@@ -109,5 +109,15 @@ class tempUserController extends Controller
      */
     protected function destroy()
     {
+        //only work if im logged in
+        /*
+        if (Auth::id() == 1) {
+            foreach (usersTemp::all() as $temp) {
+
+            }
+            return redirect('/');
+        }
+        abort(404);
+        */
     }
 }

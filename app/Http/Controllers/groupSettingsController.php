@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\golfCorse;
 use App\golfHole;
+use App\golfScore;
 use App\group;
+use App\groupMembers;
 use App\groupSettings;
+use App\users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class groupSettingsController extends Controller
 {
@@ -18,6 +22,7 @@ class groupSettingsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('firstTimeSetup');
     }
 
 
@@ -32,6 +37,7 @@ class groupSettingsController extends Controller
             return redirect('/');
         }
         $golfCorse = golfCorse::where('groupid', group::currentGroupId())->get();
+        $holes = [];
         foreach ($golfCorse as $gc) {
             $holes[$gc->name] = golfHole::where('corseid', $gc->id)->get();
         }
@@ -116,7 +122,17 @@ class groupSettingsController extends Controller
             return redirect('/');
         }
         if ($request->get('name') && $request->get('name') != Auth::user()->name) {
-            echo 123;
+            $user = users::where('name', $request->get('name'))->first();
+            $gid = group::currentGroupId();
+            //remove from group members
+            DB::delete('DELETE FROM group_members where groupid = ? AND userid = ?', [$gid, $user->id]);
+            //remove scores
+            foreach (golfScore::where('groupid', $gid)->where('user', $user->id)->get() as $gs) {
+                $score = golfScore::find($gs->id);
+                $score->delete();
+            }
+            //generate new join code
+            DB::update('UPDATE group_settings set value = ? where groupid = ? AND name="join_code"', [groupSettings::generateJoinCode(), $gid]);
         }
         return redirect('/groupsettings');
     }

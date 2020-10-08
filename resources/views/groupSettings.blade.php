@@ -97,11 +97,11 @@
                                     <tr>
                                         <td>{{ $player->name }}</td>
                                         <td>
-                                            <input type="checkbox" id='{{ $player->name }}' name='{{ $player->name }}' class="check-del" onclick="unblock('{{ $player->name }}',this);">
+                                            <input autocomplete="off" type="checkbox" id='{{ $player->name }}' name='{{ $player->name }}' class="check-del" onclick="unblock('{{ $player->name }}',this);">
                                             <label for="{{ $player->name }}">Remove Player</label>
                                         </td>
                                         <td>
-                                            <form id='del-form-{{ $player->name }}' method="POST" action="removeplayer" >
+                                            <form id='del-form-{{ $player->name }}' method="POST" action="removeplayer"   autocomplete="off">
                                                 @csrf
                                                 <input type="hidden" name="name" value="{{ $player->name }}">
                                                 <input type="submit" id='del-btn-{{ $player->name }}' class="btn btn-primary remove-btn" value="Remove" disabled/>
@@ -123,7 +123,8 @@
                 Invite Players
             </div>
             <div class="card-body" style="height: 100%">
-                invite code @todo
+                users can use the link below to join the group
+                <label class="inviteLink">http://pitchnputt.yaboilulu.co.uk/joingroup?join={{ $settings['join_code'] }}</label>
             </div>
         </div>
     </div>

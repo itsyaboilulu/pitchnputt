@@ -7,6 +7,7 @@ use App\golfWeek;
 use App\group;
 use App\groupMembers;
 use App\groupSettings;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,8 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('firstTimeSetup');
+        $this->middleware('noData');
     }
 
 

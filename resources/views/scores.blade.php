@@ -11,11 +11,17 @@
         <div class="table-responsive">
             <form method="POST" action="setscores" autocomplete="off" >
                 @csrf
-                <label class="mr-2">course:<i class="ml-2"  id="new-course-notice"> Register a new corse in settings </i><select name="corse" id="new-course" class="mb-2 custom-select custom-select-sm form-control form-control-sm"> </label>
-                    @foreach ($corses as $corse)
-                        <option value="{{ $corse->name }}">{{ $corse->name }}</option>
-                    @endforeach
-                </select>
+                @if (count($corses) == 0)
+                    <label class="mr-2">course:<i class="ml-2"  id="new-course-notice"></i><select name="corse" id="new-course" class="mb-2 custom-select custom-select-sm form-control form-control-sm"> </label>
+                            <option value="new">New Corse</option>
+                    </select>
+                @else
+                    <label class="mr-2">course:<i class="ml-2"  id="new-course-notice"> Register a new corse in settings </i><select name="corse" id="new-course" class="mb-2 custom-select custom-select-sm form-control form-control-sm"> </label>
+                        @foreach ($corses as $corse)
+                            <option value="{{ $corse->name }}">{{ $corse->name }}</option>
+                        @endforeach
+                    </select>
+                @endif
                 <table class="table table-bordered score-table" id="dataTable" width="100%" cellspacing="0">
                     <tr>
                         <th></th>
