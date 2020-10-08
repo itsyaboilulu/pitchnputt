@@ -17,7 +17,7 @@ class firstTimeSetup
      */
     public function handle($request, Closure $next)
     {
-        if (!group::currentGroupId()) {
+        if (!session('group', 0)) {
             return redirect('/newgroup');
         }
         return $next($request);
