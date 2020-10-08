@@ -42,7 +42,7 @@ class tempUserController extends Controller
         $tu->save();
         //create Group
         $group = new group();
-        $group->name = 'tempGroup-' . time();
+        $group->name = 'tempGroup';
         $group->save();
         $gid = $group->id;
         //add cource

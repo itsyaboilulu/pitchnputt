@@ -38,7 +38,8 @@
                                         </form>
                                     </div>
                                     <div class="card-footer text-center">
-
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+                <a class="dropdown-item" onclick="document.getElementById('logout-form').submit()" >Logout</a>
                                     </div>
                                 </div>
                             </div>

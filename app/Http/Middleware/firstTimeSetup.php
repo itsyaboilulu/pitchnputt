@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\groupMembers;
 use App\group;
+use Illuminate\Support\Facades\Auth;
 use Closure;
 
 class firstTimeSetup
@@ -17,7 +19,8 @@ class firstTimeSetup
      */
     public function handle($request, Closure $next)
     {
-        if (!session('group', 0)) {
+
+        if (count(group::find(groupMembers::where('userid', Auth::id())->get())) == 0) {
             return redirect('/newgroup');
         }
         return $next($request);
