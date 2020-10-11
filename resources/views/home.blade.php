@@ -90,9 +90,9 @@
                                 }
                             @endphp
                             @foreach ($total_ret as $t)
-                                <td>{{ $t / count($score) }}</td>
+                                <td>{{ round($t / count($score),1) }}</td>
                             @endforeach
-                            <td>{{ array_sum($total_ret) / count($score)  }}</td>
+                            <td>{{ round(array_sum($total_ret) / count($score),1)  }}</td>
                         </tr>
                     @endforeach
                 </tbody>
