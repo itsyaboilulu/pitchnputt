@@ -391,6 +391,7 @@ class golfController extends Controller
         return $ret;
     }
 
+
     /**
      * returns a list of players based on consistancy( % to get the same score ),
      * can be filtered into weeks and hole

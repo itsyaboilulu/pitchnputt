@@ -2,6 +2,7 @@
 
 use App\group;
 use App\Http\Controllers\golfController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,43 +17,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-
 Auth::routes();
 
-Route::get('/tempUser',         'tempUserController@create');
-Route::get('',                  'HomeController@home')->name('home');
-Route::get('/player',           'HomeController@pageBio')->name('player');
-Route::get('/week',             'HomeController@pageWeek')->name('week');
-Route::get('/scores',           'scoresSettingsController@pageScores')->name('scores');
-Route::get('/changegroup',      'newGroupController@pageChangeGroup')->name('changeGroup');
-Route::get('/groupsettings',    'groupSettingsController@pageSettings')->name('groupsettings');
-Route::get('/newgroup',         'newGroupController@pageNewGroup')->name('newGroup');
-Route::get('/lobby',            'lobbyController@pageLobby');
-Route::get('/joingroup',        'newGroupController@join');
+Route::get('',              'HomeController@home')->name('home');
+//reduce load speed by using this method
+Route::get('/{any}', function ($any) {
+    echo $any;
+    switch($any){
+        case 'tempUser':        return (new App\Http\Controllers\tempUserController())->create();
 
-Route::post('/setscores',       'scoresSettingsController@setScores');
-Route::post('/updatescores',    'scoresSettingsController@updateScores');
-Route::post('/updatecourse',    'groupSettingsController@updateCourse');
-Route::post('/setcourse',       'groupSettingsController@setCourse')->name('setCourse');
-Route::post('/removeplayer',    'groupSettingsController@removePlayer');
-Route::post('/newgroup/create', 'newGroupController@create')->name('newGroup');
-Route::post('/newgroup/join',   'newGroupController@join')->name('newGroup');
+        case 'player':          return (new App\Http\Controllers\HomeController())->pageBio(Request());
+        case 'week':            return (new App\Http\Controllers\HomeController())->pageWeek(Request());
 
-Route::get('/home', function () {
-    return redirect()->route('home');
+        case 'scores':          return (new App\Http\Controllers\scoresSettingsController())->pageScores(Request());
+        case 'setscores':       return (new App\Http\Controllers\scoresSettingsController())->setScores(Request());
+        case 'updatescores':    return (new App\Http\Controllers\scoresSettingsController())->updateScores(Request());
+
+        case 'newgroup':        return (new App\Http\Controllers\newGroupController())->pageNewGroup(Request());
+        case 'joingroup':       return (new App\Http\Controllers\lobbyController())->join(Request());
+        case 'lobby':           return (new App\Http\Controllers\newGroupController())->pageLobby(Request());
+        case 'newgroup/create': return (new App\Http\Controllers\newGroupController())->create(Request());
+        case 'newgroup/join': return (new App\Http\Controllers\newGroupController())->join(Request());
+        case 'changegroup':     return (new App\Http\Controllers\newGroupController())->pageChangeGroup(Request());
+
+        case 'groupsettings':   return (new App\Http\Controllers\groupSettingsController())->pageSettings(Request());
+        case 'updatecourse':    return (new App\Http\Controllers\groupSettingsController())->updateCourse(Request());
+        case 'setcourse':       return (new App\Http\Controllers\groupSettingsController())->setCourse(Request());
+        case 'removeplayer':    return (new App\Http\Controllers\groupSettingsController())->removePlayer(Request());
+
+    }
 });
 
-if (env('APP_DEBUG')) {
-    Route::get('/test', function () {
-        $golf = new golfController(1);
-        $pos = $golf->positions(2);
-        print_r($pos[0]);
-        echo '<hr>';
-        print_r($pos[1]);
-        echo '<hr>';
-        print_r($pos[2]);
-        echo '<hr>';
-    });
-}
